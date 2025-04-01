@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -17,6 +18,16 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+
+    Route::get('/movies/search', function () {
+        $searchQuery = request('q');
+        $results = $searchQuery ? Movie::search($searchQuery)->get(): collect();
+
+        return view('movies.search', [
+            'searchQuery' => $searchQuery,
+            'results' => $results
+        ]);
+    });
 });
 
 require __DIR__.'/auth.php';
