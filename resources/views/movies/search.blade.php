@@ -17,7 +17,7 @@
     </form>
     <ul>
         @foreach ($results as $result)
-            <li>{{ $result->title }} ({{ $result->release_year }})</li>
+            <li>{{ $result['title'] }} ({{ $result['release_year'] }})</li>
         @endforeach
     </ul>
 </body>

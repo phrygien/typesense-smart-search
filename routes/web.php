@@ -27,10 +27,14 @@ Route::get('/movies/search', function () {
    //dd($results);
 
    $results = collect($results['hits'])->map(function ($result) {
-       return $result['document']['title'];
+       return [
+        'title' => $result['document']['title'],
+        'release_year' => $result['document']['release_year'],
+        'highlight' => $result['highlight']['title']['snippet'] ?? null,
+        ];
    });
 
-   dd($results);
+  // dd($results);
 
     return view('movies.search', [
         'searchQuery' => $searchQuery,
